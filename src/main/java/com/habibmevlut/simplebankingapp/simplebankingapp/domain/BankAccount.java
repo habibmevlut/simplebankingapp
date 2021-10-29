@@ -1,6 +1,8 @@
 package com.habibmevlut.simplebankingapp.simplebankingapp.domain;
 
 import com.sun.istack.NotNull;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -8,6 +10,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "bank_account")
+@ApiModel(value = "BankAccount", description = "BankAccount entity model")
 public class BankAccount implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -16,13 +19,16 @@ public class BankAccount implements Serializable {
 
     @NotNull
     @Column(name = "owner")
+    @ApiModelProperty(value = "Account owner name and surname")
     private String owner;
 
     @NotNull
     @Column(name = "account_number")
+    @ApiModelProperty(value = "It declare the number of account")
     private String accountNumber;
 
     @Column(name = "balance")
+    @ApiModelProperty(value = "It declare the value of account")
     private Double balance;
 
 //    @OneToMany(mappedBy = "bankAccount")
