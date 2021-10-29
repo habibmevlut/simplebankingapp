@@ -16,7 +16,7 @@ public class WithdrawalResource {
     OperationService operationService;
 
     @PostMapping("/operation/withdraw")
-    public Operation save(@RequestBody OperationInputDTO operationInputDTO) {
-        return operationService.saveWithDraw(operationInputDTO);
+    public Operation withDraw(@RequestBody OperationInputDTO operationInputDTO) {
+        return operationService.withDrawOperation(operationInputDTO);
     }
 }

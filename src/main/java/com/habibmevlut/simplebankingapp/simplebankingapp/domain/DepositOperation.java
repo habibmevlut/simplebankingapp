@@ -9,6 +9,6 @@ public class DepositOperation extends Operation {
 
     @Override
     public double operate(Double amount) {
-        return this.getAmount() + amount;
+        return this.getBankAccount().getBalance() + amount;
     }
 }

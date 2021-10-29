@@ -1,6 +1,7 @@
 package com.habibmevlut.simplebankingapp.simplebankingapp.service;
 
 import com.habibmevlut.simplebankingapp.simplebankingapp.domain.BankAccount;
+import com.habibmevlut.simplebankingapp.simplebankingapp.domain.DepositOperation;
 import com.habibmevlut.simplebankingapp.simplebankingapp.domain.Operation;
 import com.habibmevlut.simplebankingapp.simplebankingapp.domain.WithdrawalOperation;
 import com.habibmevlut.simplebankingapp.simplebankingapp.domain.enumeration.OperationTypeEnum;
@@ -22,7 +23,7 @@ public class OperationService {
     @Autowired
     BankAccountRepository bankAccountRepository;
 
-    public Operation saveWithDraw(OperationInputDTO operationInputDTO) {
+    public Operation withDrawOperation(OperationInputDTO operationInputDTO) {
         BankAccount account = bankAccountRepository.findById(operationInputDTO.getBankAccountId()).get();
         WithdrawalOperation withdrawalOperation = new WithdrawalOperation();
         withdrawalOperation.setAmount(operationInputDTO.getAmount());
@@ -34,12 +35,15 @@ public class OperationService {
         return operationRepository.save(withdrawalOperation);
     }
 
-//    public List<BankAccount> getAll() {
-//        return operationRepository.findAll();
-//    }
-//
-//    public Optional<BankAccount> getById(Long id) {
-//        Optional<BankAccount> result = operationRepository.findById(id);
-//        return result;
-//    }
+    public Operation depositOperation(OperationInputDTO operationInputDTO) {
+        BankAccount account = bankAccountRepository.findById(operationInputDTO.getBankAccountId()).get();
+        DepositOperation depositOperation = new DepositOperation();
+        depositOperation.setAmount(operationInputDTO.getAmount());
+        depositOperation.setBankAccount(account);
+        depositOperation.setDate(LocalDateTime.now());
+        depositOperation.setOperationType(OperationTypeEnum.DEPOSIT);
+        account.setBalance(depositOperation.operate(operationInputDTO.getAmount()));
+        bankAccountRepository.save(account);
+        return operationRepository.save(depositOperation);
+    }
 }
