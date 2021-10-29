@@ -26,15 +26,15 @@ public class BankAccount implements Serializable {
     @Column(name = "balance")
     private Double balance;
 
-    @OneToMany(mappedBy = "bankAccount")
-    private List<Operation> operation;
+//    @OneToMany(mappedBy = "bankAccount")
+//    private List<Operation> operation;
 
     public BankAccount(Long id, String owner, String accountNumber, Double balance, List<Operation> operation) {
         this.id = id;
         this.owner = owner;
         this.accountNumber = accountNumber;
         this.balance = balance;
-        this.operation = operation;
+//        this.operation = operation;
     }
 
     public BankAccount() {
@@ -76,13 +76,13 @@ public class BankAccount implements Serializable {
         this.balance = balance;
     }
 
-    public List<Operation> getOperation() {
-        return operation;
-    }
-
-    public void setOperation(List<Operation> operation) {
-        this.operation = operation;
-    }
+//    public List<Operation> getOperation() {
+//        return operation;
+//    }
+//
+//    public void setOperation(List<Operation> operation) {
+//        this.operation = operation;
+//    }
 
     @Override
     public String toString() {
@@ -91,24 +91,8 @@ public class BankAccount implements Serializable {
                 ", owner='" + owner + '\'' +
                 ", accountNumber='" + accountNumber + '\'' +
                 ", balance=" + balance +
-                ", operation=" + operation +
                 '}';
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        BankAccount that = (BankAccount) o;
-        return Objects.equals(id, that.id) &&
-                Objects.equals(owner, that.owner) &&
-                Objects.equals(accountNumber, that.accountNumber) &&
-                Objects.equals(balance, that.balance) &&
-                Objects.equals(operation, that.operation);
-    }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, owner, accountNumber, balance, operation);
-    }
 }

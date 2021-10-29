@@ -29,6 +29,8 @@ public class OperationService {
         withdrawalOperation.setBankAccount(account);
         withdrawalOperation.setDate(LocalDateTime.now());
         withdrawalOperation.setOperationType(OperationTypeEnum.WITHDRAW);
+        account.setBalance(withdrawalOperation.operate(operationInputDTO.getAmount()));
+        bankAccountRepository.save(account);
         return operationRepository.save(withdrawalOperation);
     }
 

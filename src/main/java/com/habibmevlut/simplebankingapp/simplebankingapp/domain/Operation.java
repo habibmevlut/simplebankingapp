@@ -6,16 +6,18 @@ import com.sun.istack.NotNull;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.Objects;
 
 @Entity
-@DiscriminatorValue("0")
+//@Polymorphism(type = PolymorphismType.EXPLICIT)
+
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "operation_type_id", discriminatorType = DiscriminatorType.INTEGER)
+
 @Table(name = "operation")
 public abstract class Operation implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotNull
@@ -27,10 +29,10 @@ public abstract class Operation implements Serializable {
     private Double amount;
 
     @Enumerated(EnumType.ORDINAL)
-    @Column(name = "operation_type_id")
+    @Column(name = "operation_type_id", nullable = false, insertable = false, updatable = false)
     private OperationTypeEnum operationType;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @NotNull
     private BankAccount bankAccount;
 
@@ -80,31 +82,4 @@ public abstract class Operation implements Serializable {
         this.bankAccount = bankAccount;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Operation operation = (Operation) o;
-        return Objects.equals(id, operation.id) &&
-                Objects.equals(date, operation.date) &&
-                Objects.equals(amount, operation.amount) &&
-                operationType == operation.operationType &&
-                Objects.equals(bankAccount, operation.bankAccount);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, date, amount, operationType, bankAccount);
-    }
-
-    @Override
-    public String toString() {
-        return "Operation{" +
-                "id=" + id +
-                ", date=" + date +
-                ", amount=" + amount +
-                ", operationType=" + operationType +
-                ", bankAccount=" + bankAccount +
-                '}';
-    }
 }
