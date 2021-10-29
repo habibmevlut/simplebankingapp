@@ -1,44 +1,17 @@
-package com.habibmevlut.simplebankingapp.simplebankingapp.domain;
+package com.habibmevlut.simplebankingapp.simplebankingapp.service.dto;
 
+import com.habibmevlut.simplebankingapp.simplebankingapp.domain.BankAccount;
 import com.habibmevlut.simplebankingapp.simplebankingapp.domain.enumeration.OperationTypeEnum;
-import com.sun.istack.NotNull;
 
-import javax.persistence.*;
-import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-@Entity
-@DiscriminatorValue("0")
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@Table(name = "operation")
-public abstract class Operation implements Serializable {
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+public class OperationResultDTO {
     private Long id;
-
-    @NotNull
-    @Column(name = "date")
     private LocalDateTime date;
-
-    @NotNull
-    @Column(name = "amount")
     private Double amount;
-
-    @Enumerated(EnumType.ORDINAL)
-    @Column(name = "operation_type_id")
     private OperationTypeEnum operationType;
-
-    @ManyToOne
-    @NotNull
     private BankAccount bankAccount;
-
-    public abstract double operate(Double amount);
-
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
-    }
 
     public Long getId() {
         return id;
@@ -84,12 +57,12 @@ public abstract class Operation implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Operation operation = (Operation) o;
-        return Objects.equals(id, operation.id) &&
-                Objects.equals(date, operation.date) &&
-                Objects.equals(amount, operation.amount) &&
-                operationType == operation.operationType &&
-                Objects.equals(bankAccount, operation.bankAccount);
+        OperationResultDTO that = (OperationResultDTO) o;
+        return Objects.equals(id, that.id) &&
+                Objects.equals(date, that.date) &&
+                Objects.equals(amount, that.amount) &&
+                operationType == that.operationType &&
+                Objects.equals(bankAccount, that.bankAccount);
     }
 
     @Override
@@ -99,7 +72,7 @@ public abstract class Operation implements Serializable {
 
     @Override
     public String toString() {
-        return "Operation{" +
+        return "OperationResultDTO{" +
                 "id=" + id +
                 ", date=" + date +
                 ", amount=" + amount +

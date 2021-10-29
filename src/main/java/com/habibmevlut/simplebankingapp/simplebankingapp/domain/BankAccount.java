@@ -4,6 +4,7 @@ import com.sun.istack.NotNull;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -25,10 +26,10 @@ public class BankAccount implements Serializable {
     @Column(name = "balance")
     private Double balance;
 
-    @ManyToOne
-    private Operation operation;
+    @OneToMany(mappedBy = "bankAccount")
+    private List<Operation> operation;
 
-    public BankAccount(Long id, String owner, String accountNumber, Double balance, Operation operation) {
+    public BankAccount(Long id, String owner, String accountNumber, Double balance, List<Operation> operation) {
         this.id = id;
         this.owner = owner;
         this.accountNumber = accountNumber;
@@ -75,11 +76,11 @@ public class BankAccount implements Serializable {
         this.balance = balance;
     }
 
-    public Operation getOperation() {
+    public List<Operation> getOperation() {
         return operation;
     }
 
-    public void setOperation(Operation operation) {
+    public void setOperation(List<Operation> operation) {
         this.operation = operation;
     }
 
