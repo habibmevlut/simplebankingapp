@@ -4,7 +4,6 @@ public class BankAccountInputDTO {
     private String owner;
     private String accountNumber;
     private Double balance;
-    private Long operationId;
 
     public String getOwner() {
         return owner;
@@ -30,13 +29,6 @@ public class BankAccountInputDTO {
         this.balance = balance;
     }
 
-    public Long getOperationId() {
-        return operationId;
-    }
-
-    public void setOperationId(Long operationId) {
-        this.operationId = operationId;
-    }
 
     @Override
     public String toString() {
@@ -44,7 +36,6 @@ public class BankAccountInputDTO {
                 "owner='" + owner + '\'' +
                 ", accountNumber='" + accountNumber + '\'' +
                 ", balance=" + balance +
-                ", operationId=" + operationId +
                 '}';
     }
 }
