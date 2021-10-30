@@ -6,7 +6,7 @@ import javax.persistence.Entity;
 
 @Entity
 @DiscriminatorValue("0")
-public class WithdrawalOperation extends Operation {
+public class WithdrawOperation extends Operation {
 
     @Override
     public double operate(Double amount) {

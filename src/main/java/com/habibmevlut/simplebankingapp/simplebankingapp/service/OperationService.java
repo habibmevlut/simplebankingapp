@@ -3,7 +3,7 @@ package com.habibmevlut.simplebankingapp.simplebankingapp.service;
 import com.habibmevlut.simplebankingapp.simplebankingapp.domain.BankAccount;
 import com.habibmevlut.simplebankingapp.simplebankingapp.domain.DepositOperation;
 import com.habibmevlut.simplebankingapp.simplebankingapp.domain.Operation;
-import com.habibmevlut.simplebankingapp.simplebankingapp.domain.WithdrawalOperation;
+import com.habibmevlut.simplebankingapp.simplebankingapp.domain.WithdrawOperation;
 import com.habibmevlut.simplebankingapp.simplebankingapp.domain.enumeration.OperationTypeEnum;
 import com.habibmevlut.simplebankingapp.simplebankingapp.domain.exception.InsufficientBalanceException;
 import com.habibmevlut.simplebankingapp.simplebankingapp.repository.BankAccountRepository;
@@ -28,14 +28,14 @@ public class OperationService {
 
     public Operation withDrawOperation(OperationInputDTO operationInputDTO) {
         BankAccount account = bankAccountRepository.findById(operationInputDTO.getBankAccountId()).get();
-        WithdrawalOperation withdrawalOperation = new WithdrawalOperation();
-        withdrawalOperation.setAmount(operationInputDTO.getAmount());
-        withdrawalOperation.setBankAccount(account);
-        withdrawalOperation.setDate(LocalDateTime.now());
-        withdrawalOperation.setOperationType(OperationTypeEnum.WITHDRAW);
+        WithdrawOperation withdrawOperation = new WithdrawOperation();
+        withdrawOperation.setAmount(operationInputDTO.getAmount());
+        withdrawOperation.setBankAccount(account);
+        withdrawOperation.setDate(LocalDateTime.now());
+        withdrawOperation.setOperationType(OperationTypeEnum.WITHDRAW);
         try {
             if (account.getBalance() > operationInputDTO.getAmount()) {
-                account.setBalance(withdrawalOperation.operate(operationInputDTO.getAmount()));
+                account.setBalance(withdrawOperation.operate(operationInputDTO.getAmount()));
             } else {
                 throw new InsufficientBalanceException();
             }
@@ -44,7 +44,7 @@ public class OperationService {
         }
 
         bankAccountRepository.save(account);
-        return operationRepository.save(withdrawalOperation);
+        return operationRepository.save(withdrawOperation);
     }
 
     public Operation depositOperation(OperationInputDTO operationInputDTO) {
