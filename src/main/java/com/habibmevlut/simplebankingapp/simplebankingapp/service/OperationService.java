@@ -5,6 +5,7 @@ import com.habibmevlut.simplebankingapp.simplebankingapp.domain.DepositOperation
 import com.habibmevlut.simplebankingapp.simplebankingapp.domain.Operation;
 import com.habibmevlut.simplebankingapp.simplebankingapp.domain.WithdrawalOperation;
 import com.habibmevlut.simplebankingapp.simplebankingapp.domain.enumeration.OperationTypeEnum;
+import com.habibmevlut.simplebankingapp.simplebankingapp.domain.exception.InsufficientBalanceException;
 import com.habibmevlut.simplebankingapp.simplebankingapp.repository.BankAccountRepository;
 import com.habibmevlut.simplebankingapp.simplebankingapp.repository.OperationRepository;
 import com.habibmevlut.simplebankingapp.simplebankingapp.service.dto.OperationInputDTO;
@@ -32,7 +33,16 @@ public class OperationService {
         withdrawalOperation.setBankAccount(account);
         withdrawalOperation.setDate(LocalDateTime.now());
         withdrawalOperation.setOperationType(OperationTypeEnum.WITHDRAW);
-        account.setBalance(withdrawalOperation.operate(operationInputDTO.getAmount()));
+        try {
+            if (account.getBalance() > operationInputDTO.getAmount()) {
+                account.setBalance(withdrawalOperation.operate(operationInputDTO.getAmount()));
+            } else {
+                throw new InsufficientBalanceException();
+            }
+        } catch (InsufficientBalanceException e) {
+            System.out.println(e.getMessage());
+        }
+
         bankAccountRepository.save(account);
         return operationRepository.save(withdrawalOperation);
     }
@@ -55,5 +65,9 @@ public class OperationService {
 
     public Optional<Operation> getById(Long id) {
         return operationRepository.findById(id);
+    }
+
+    public List<Operation> getByAccountId(Long id) {
+        return operationRepository.findByBankAccountId(id);
     }
 }
