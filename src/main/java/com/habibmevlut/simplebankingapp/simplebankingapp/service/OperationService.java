@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
+import java.util.List;
 
 
 @Service
@@ -45,5 +46,9 @@ public class OperationService {
         account.setBalance(depositOperation.operate(operationInputDTO.getAmount()));
         bankAccountRepository.save(account);
         return operationRepository.save(depositOperation);
+    }
+
+    public List<Operation> getAll() {
+        return operationRepository.findAll();
     }
 }

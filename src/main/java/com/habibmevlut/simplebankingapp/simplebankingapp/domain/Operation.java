@@ -1,11 +1,13 @@
 package com.habibmevlut.simplebankingapp.simplebankingapp.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.habibmevlut.simplebankingapp.simplebankingapp.domain.enumeration.OperationTypeEnum;
 import com.sun.istack.NotNull;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Entity
 //@Polymorphism(type = PolymorphismType.EXPLICIT)
@@ -34,6 +36,7 @@ public abstract class Operation implements Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @NotNull
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private BankAccount bankAccount;
 
     public abstract double operate(Double amount);
@@ -82,4 +85,31 @@ public abstract class Operation implements Serializable {
         this.bankAccount = bankAccount;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Operation operation = (Operation) o;
+        return Objects.equals(id, operation.id) &&
+                Objects.equals(date, operation.date) &&
+                Objects.equals(amount, operation.amount) &&
+                operationType == operation.operationType &&
+                Objects.equals(bankAccount, operation.bankAccount);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, date, amount, operationType, bankAccount);
+    }
+
+    @Override
+    public String toString() {
+        return "Operation{" +
+                "id=" + id +
+                ", date=" + date +
+                ", amount=" + amount +
+                ", operationType=" + operationType +
+                ", bankAccount=" + bankAccount +
+                '}';
+    }
 }

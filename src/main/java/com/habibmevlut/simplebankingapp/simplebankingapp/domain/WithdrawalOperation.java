@@ -5,7 +5,7 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
 @Entity
-@DiscriminatorValue("1")
+@DiscriminatorValue("0")
 public class WithdrawalOperation extends Operation {
 
     @Override

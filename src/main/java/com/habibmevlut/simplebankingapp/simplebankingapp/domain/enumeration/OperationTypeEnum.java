@@ -1,8 +1,8 @@
 package com.habibmevlut.simplebankingapp.simplebankingapp.domain.enumeration;
 
 public enum OperationTypeEnum {
-    WITHDRAW(1),
-    DEPOSIT(2);
+    WITHDRAW(0),
+    DEPOSIT(1);
 
     OperationTypeEnum(int i) {
     }

@@ -1,7 +1,6 @@
 package com.habibmevlut.simplebankingapp.simplebankingapp.service;
 
 import com.habibmevlut.simplebankingapp.simplebankingapp.domain.BankAccount;
-import com.habibmevlut.simplebankingapp.simplebankingapp.domain.Operation;
 import com.habibmevlut.simplebankingapp.simplebankingapp.repository.BankAccountRepository;
 import com.habibmevlut.simplebankingapp.simplebankingapp.service.dto.BankAccountInputDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,13 +34,5 @@ public class BankAccountService {
     public Optional<BankAccount> getById(Long id) {
         Optional<BankAccount> result = bankAccountRepository.findById(id);
         return result;
-    }
-
-    public void post(Operation operation) {
-        BankAccount bankAccount = bankAccountRepository.findById(operation.getBankAccount().getId()).get();
-        double newBalance = operation.operate(operation.getAmount());
-        bankAccount.setBalance(newBalance);
-
-        bankAccountRepository.save(bankAccount);
     }
 }
