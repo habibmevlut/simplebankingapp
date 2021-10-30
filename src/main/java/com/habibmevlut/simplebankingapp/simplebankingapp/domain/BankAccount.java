@@ -31,15 +31,11 @@ public class BankAccount implements Serializable {
     @ApiModelProperty(value = "It declare the value of account")
     private Double balance;
 
-//    @OneToMany(mappedBy = "bankAccount")
-//    private List<Operation> operation;
-
-    public BankAccount(Long id, String owner, String accountNumber, Double balance, List<Operation> operation) {
+    public BankAccount(Long id, String owner, String accountNumber, Double balance) {
         this.id = id;
         this.owner = owner;
         this.accountNumber = accountNumber;
         this.balance = balance;
-//        this.operation = operation;
     }
 
     public BankAccount() {
@@ -80,14 +76,6 @@ public class BankAccount implements Serializable {
     public void setBalance(Double balance) {
         this.balance = balance;
     }
-
-//    public List<Operation> getOperation() {
-//        return operation;
-//    }
-//
-//    public void setOperation(List<Operation> operation) {
-//        this.operation = operation;
-//    }
 
     @Override
     public String toString() {
