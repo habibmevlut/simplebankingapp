@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
@@ -17,6 +18,11 @@ public class OperationResource {
     @GetMapping("/operation")
     public List<Operation> getAllOperation() {
         return operationService.getAll();
+    }
+
+    @GetMapping("/operation/{id}")
+    public Optional<Operation> getOperationById(@PathVariable Long id) {
+        return operationService.getById(id);
     }
 
     @PostMapping("/operation/deposit")
