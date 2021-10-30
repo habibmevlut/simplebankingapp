@@ -6,7 +6,6 @@ import io.swagger.annotations.ApiModelProperty;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.List;
 
 @Entity
 @Table(name = "bank_account")
@@ -15,6 +14,7 @@ public class BankAccount implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @ApiModelProperty(notes = "ID of the BankAccount", name = "id", required = true, value = "262626")
     private Long id;
 
     @NotNull
