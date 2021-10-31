@@ -58,4 +58,16 @@ public class OperationResource {
         return billPaymentService.save(billPaymentInputDTO);
     }
 
+    @ApiOperation(value = "Get All Bill Payment Operations", response = BillPayment.class)
+    @GetMapping("/operation-bill-payment")
+    public List<BillPayment> getAllBillPayment() {
+        return billPaymentService.getAll();
+    }
+
+    @ApiOperation(value = "Get Bill Payment Operation By Id", response = BillPayment.class)
+    @GetMapping("/operation-bill-payment/{id}")
+    public Optional<BillPayment> getAllBillPaymentById(@PathVariable Long id) {
+        return billPaymentService.getById(id);
+    }
+
 }
