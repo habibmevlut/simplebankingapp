@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <!--Add the entity Operation to DB-->
+    <changeSet author="Habib" id="1">
+        <createTable tableName="operation">
+            <column autoIncrement="true" name="id" type="bigint">
+                <constraints primaryKey="true" nullable="false" unique="true"/>
+            </column>
+            <column name="date" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="amount" type="double">
+                <constraints nullable="false"/>
+            </column>
+            <column name="bank_account_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="operation_type_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint baseColumnNames="bank_account_id"
+                                 baseTableName="operation"
+                                 constraintName="operation_bank_account_id_fk"
+                                 referencedColumnNames="id"
+                                 referencedTableName="bank_account"/>
+
+        <rollback>
+            <dropTable tableName="operation"/>
+        </rollback>
+    </changeSet>
+
+
+</databaseChangeLog>
