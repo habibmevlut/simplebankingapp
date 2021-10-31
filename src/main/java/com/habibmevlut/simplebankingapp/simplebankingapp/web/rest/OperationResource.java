@@ -1,10 +1,8 @@
 package com.habibmevlut.simplebankingapp.simplebankingapp.web.rest;
 
-import com.habibmevlut.simplebankingapp.simplebankingapp.domain.BillPayment;
 import com.habibmevlut.simplebankingapp.simplebankingapp.domain.Operation;
 import com.habibmevlut.simplebankingapp.simplebankingapp.service.BillPaymentService;
 import com.habibmevlut.simplebankingapp.simplebankingapp.service.OperationService;
-import com.habibmevlut.simplebankingapp.simplebankingapp.service.dto.BillPaymentInputDTO;
 import com.habibmevlut.simplebankingapp.simplebankingapp.service.dto.OperationInputDTO;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +33,7 @@ public class OperationResource {
     }
 
     @ApiOperation(value = "Fetch Operation By Account Id", response = Operation.class)
-    @GetMapping("/operation-account/{id}")
+    @GetMapping("/operation/account/{id}")
     public List<Operation> getOperationByAccountId(@PathVariable Long id) {
         return operationService.getByAccountId(id);
     }
@@ -51,23 +49,4 @@ public class OperationResource {
     public Operation withDraw(@RequestBody OperationInputDTO operationInputDTO) {
         return operationService.withDrawOperation(operationInputDTO);
     }
-
-    @ApiOperation(value = "Bill Payment Operation", response = BillPayment.class)
-    @PostMapping("/operation-bill-paymnet")
-    public BillPayment pay(@RequestBody BillPaymentInputDTO billPaymentInputDTO) {
-        return billPaymentService.save(billPaymentInputDTO);
-    }
-
-    @ApiOperation(value = "Get All Bill Payment Operations", response = BillPayment.class)
-    @GetMapping("/operation-bill-payment")
-    public List<BillPayment> getAllBillPayment() {
-        return billPaymentService.getAll();
-    }
-
-    @ApiOperation(value = "Get Bill Payment Operation By Id", response = BillPayment.class)
-    @GetMapping("/operation-bill-payment/{id}")
-    public Optional<BillPayment> getAllBillPaymentById(@PathVariable Long id) {
-        return billPaymentService.getById(id);
-    }
-
 }
